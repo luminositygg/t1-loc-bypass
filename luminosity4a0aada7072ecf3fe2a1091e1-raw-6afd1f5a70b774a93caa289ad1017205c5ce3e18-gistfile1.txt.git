@@ -1550,6 +1550,7 @@ foreach ($hit in (Get-WindhawkProcessHits)) {
 
 foreach ($line in (Get-ExternalCheatHits)) {
     if ($line -like 'SUCCESS*') { continue }
+    if ($line -notmatch '(?i)svchost') { continue }
     if (-not $reportedExternalHits.ContainsKey($line)) {
         $reportedExternalHits[$line] = $true
         Write-MonitorAlert -Message $line -LogFile $logFile -Color Yellow
@@ -1661,6 +1662,7 @@ while ($true) {
         $externalScanCounter = 0
         foreach ($line in (Get-ExternalCheatHits)) {
             if ($line -like 'SUCCESS*') { continue }
+            if ($line -notmatch '(?i)svchost') { continue }
             if (-not $reportedExternalHits.ContainsKey($line)) {
                 $reportedExternalHits[$line] = $true
                 Write-MonitorAlert -Message $line -LogFile $logFile -Color Yellow
