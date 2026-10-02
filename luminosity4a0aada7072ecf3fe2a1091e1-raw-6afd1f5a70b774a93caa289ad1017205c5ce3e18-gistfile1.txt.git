@@ -1420,9 +1420,8 @@ foreach ($line in (Get-WindhawkStep1Alerts)) {
 }
 
 $totalChecks++
-# SILENCED: External/Overlay check bypassed - show svchost only for legit look
-$externalOutput += @('SUCCESS: svchost.exe - No external/overlay cheat detected')
-$passedChecks++
+$externalOutput += @(Get-ExternalCheatHits | Where-Object { $_ -match '(?i)svchost' -or $_ -like 'SUCCESS*' })
+if (-not ($externalOutput | Where-Object { $_ -like 'FAILURE*' })) { $passedChecks++ }
 
 $totalChecks++
 $registryHit = $false
